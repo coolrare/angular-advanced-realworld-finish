@@ -11,6 +11,11 @@
               formControlName="title"
             />
           </fieldset>
+          <ul *ngIf="post.controls.title.dirty && post.controls.title.errors">
+            <li *ngIf="post.controls.title.errors['required']">
+              請輸入標題
+            </li>
+          </ul>
           <fieldset class="form-group">
             <textarea
               class="form-control"
@@ -27,6 +32,16 @@
               formControlName="body"
             ></textarea>
           </fieldset>
+          <ul *ngIf="post.controls.body.dirty && post.controls.body.errors">
+            <li *ngIf="post.controls.body.errors['required']">
+              請輸入內文
+            </li>
+            <li *ngIf="post.controls.body.errors['minlength']">
+              內文至少
+              {{ post.controls.body.errors['minlength'].requiredLength }}
+              個字
+            </li>
+          </ul>
           <fieldset class="form-group">
             <input
               class="form-control"
@@ -47,7 +62,10 @@
               </span>
             </div>
           </fieldset>
-          <button type="submit" class="btn btn-lg btn-primary pull-xs-right">
+          <button
+            type="submit"
+            class="btn btn-lg btn-primary pull-xs-right"
+            [disabled]="post.invalid">
             Create Post
           </button>
         </form>
